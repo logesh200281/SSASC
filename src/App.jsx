@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar and footer/Navbar";
 import Footer from "./Navbar and footer/Footer";
 import Home from "./Navbar and footer/Navebar items/Home";
@@ -34,7 +34,7 @@ import Library from "./Navbar and footer/Navebar items/Departments/Library";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Routes>
         {/* Main Pages */}
@@ -68,7 +68,7 @@ function App() {
         <Route path="/department/library" element={<Library />} />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
