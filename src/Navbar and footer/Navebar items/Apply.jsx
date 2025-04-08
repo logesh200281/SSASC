@@ -1,6 +1,7 @@
 import  { useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import entitylogogif from '../../assets/image/entitylogo.gif';
 
 const Apply = () => {
   const [formData, setFormData] = useState({
@@ -57,15 +58,37 @@ const Apply = () => {
 
   const generatePDF = () => {
     const input = document.getElementById("receipt");
+    if (!input) return;
+  
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-
+  
+      // Use the imported image directly
       const logo = new Image();
-      // eslint-disable-next-line no-undef
-      logo.src = process.env.PUBLIC_URL + "/entitylogo.gif";
+      logo.src = entitylogogif;
+      logo.crossOrigin = "anonymous"; // Avoid CORS issues
+  
       logo.onload = () => {
         pdf.addImage(logo, "PNG", 10, 10, 40, 20);
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(18);
+        pdf.text("Sri Sankara Arts and Science College", 55, 20);
+        pdf.addImage(imgData, "PNG", 10, 40, 190, 0);
+        pdf.save(`Admission_Receipt_${receiptNo}.pdf`);
+      };
+  
+      // 🔄 Fallback if the logo fails to load
+      logo.onerror = () => {
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(18);
+        pdf.text("Sri Sankara Arts and Science College", 55, 20);
+        pdf.addImage(imgData, "PNG", 10, 40, 190, 0);
+        pdf.save(`Admission_Receipt_${receiptNo}.pdf`);
+      };
+  
+      // 🔄 Fallback if logo fails
+      logo.onerror = () => {
         pdf.setFont("helvetica", "bold");
         pdf.setFontSize(18);
         pdf.text("Sri Sankara Arts and Science College", 55, 20);

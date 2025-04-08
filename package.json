@@ -5,13 +5,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "predeploy": "npm run build",
-  "build": "vite build",
-  "deploy": "gh-pages -d dist", 
-  "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-  "preview": "vite preview"
-},
+    "dev": "vite",
+    "predeploy": "npm run build",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "framer-motion": "^12.6.3",
     "html2canvas": "^1.4.1",

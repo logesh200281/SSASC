@@ -18,7 +18,7 @@ const App = () => {
 
       return {
         ...course,
-        fees: course.fees ?? { tuition: 0, hostel: 0, library: 0, total: 0 },
+        fees: course.fees ?? { tuition: 0, hostel: 0, total: 0 },
         receivedAmount: course.receivedAmount ?? 0, // Ensure receivedAmount exists
         duration,
         degree,
@@ -86,14 +86,12 @@ const App = () => {
                 <div className="mt-4 border-t-2 border-[#f3e5f5] pt-4">
                   <h3 className="text-xl font-semibold text-[#5e35b1]">Fee Structure</h3>
                   <p className="text-gray-700">
-                    <span className="font-semibold text-[#5e35b1]">Tuition Fees:</span> ₹{course.fees?.tuition ?? 0}
+                    <span className="font-semibold text-[#5e35b1]">Semester Fees:</span> ₹{course.fees?.tuition ?? 0}
                   </p>
                   <p className="text-gray-700">
                     <span className="font-semibold text-[#5e35b1]">Hostel Fees:</span> ₹{course.fees?.hostel ?? 0}
                   </p>
-                  <p className="text-gray-700">
-                    <span className="font-semibold text-[#5e35b1]">Library Fees:</span> ₹{course.fees?.library ?? 0}
-                  </p>
+
                   <p className="text-gray-700 font-bold text-lg">
                     <span className="font-semibold text-[#5e35b1]">Total Fees:</span> ₹{course.fees?.total ?? 0}
                   </p>

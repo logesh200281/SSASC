@@ -23,8 +23,16 @@ const ItemList = ({ selectedPage, setSelectedPage }) => {
   };
 
   const handleFeesChange = (field, value) => {
-    const updatedFees = { ...editData.fees, [field]: Number(value) || 0 };
-    updatedFees.total = updatedFees.tuition + updatedFees.hostel + updatedFees.library;
+    const updatedFees = {
+      ...editData.fees,
+      [field]: Number(value) || 0, // Convert value to number
+    };
+  
+    // Correct total calculation
+    updatedFees.total =
+      (parseFloat(updatedFees.tuition) || 0) +
+      (parseFloat(updatedFees.hostel) || 0) ;
+  
     setEditData({ ...editData, fees: updatedFees });
   };
 
@@ -73,9 +81,8 @@ const ItemList = ({ selectedPage, setSelectedPage }) => {
 
                 {selectedPage === "courses" && item.fees && (
                   <div className="mt-2">
-                    <p className="text-sm"><strong>Tuition Fees:</strong> ₹{item.fees.tuition}</p>
+                    <p className="text-sm"><strong>Semester Fees:</strong> ₹{item.fees.tuition}</p>
                     <p className="text-sm"><strong>Hostel Fees:</strong> ₹{item.fees.hostel}</p>
-                    <p className="text-sm"><strong>Library Fees:</strong> ₹{item.fees.library}</p>
                     <p className="text-lg font-bold text-blue-600"><strong>Total Fees:</strong> ₹{item.fees.total}</p>
                   </div>
                 )}
@@ -147,7 +154,7 @@ const ItemList = ({ selectedPage, setSelectedPage }) => {
               <label className="block font-semibold mb-1">Fees Structure:</label>
               <input
                 type="number"
-                placeholder="Tuition Fees"
+                placeholder="Semester Fees"
                 value={editData.fees?.tuition || 0}
                 onChange={(e) => handleFeesChange("tuition", e.target.value)}
                 className="w-full p-2 border rounded mb-2"

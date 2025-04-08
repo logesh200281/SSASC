@@ -17,13 +17,13 @@ const AddItem = ({ setSelectedPage }) => {
   const [duration, setDuration] = useState("");
   const [tuitionFees, setTuitionFees] = useState("");
   const [hostelFees, setHostelFees] = useState("");
-  const [libraryFees, setLibraryFees] = useState("");
+
 
   // Calculate Total Fees
   const totalFees =
     (parseFloat(tuitionFees) || 0) +
-    (parseFloat(hostelFees) || 0) +
-    (parseFloat(libraryFees) || 0);
+    (parseFloat(hostelFees) || 0) ;
+
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -47,7 +47,6 @@ const AddItem = ({ setSelectedPage }) => {
         fees: {
           tuition: tuitionFees,
           hostel: hostelFees,
-          library: libraryFees,
           total: totalFees,
         },
       };
@@ -77,7 +76,6 @@ const AddItem = ({ setSelectedPage }) => {
     setDuration("");
     setTuitionFees("");
     setHostelFees("");
-    setLibraryFees("");
 
     alert(`${selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} added successfully!`);
     setSelectedPage(selectedType);
@@ -185,7 +183,7 @@ const AddItem = ({ setSelectedPage }) => {
             />
             <input
               type="number"
-              placeholder="Tuition Fees"
+              placeholder="Semester Fees"
               value={tuitionFees}
               onChange={(e) => setTuitionFees(e.target.value)}
               className="w-full p-2 border rounded mb-2"
@@ -196,14 +194,6 @@ const AddItem = ({ setSelectedPage }) => {
               placeholder="Hostel Fees"
               value={hostelFees}
               onChange={(e) => setHostelFees(e.target.value)}
-              className="w-full p-2 border rounded mb-2"
-              required
-            />
-            <input
-              type="number"
-              placeholder="Library Fees"
-              value={libraryFees}
-              onChange={(e) => setLibraryFees(e.target.value)}
               className="w-full p-2 border rounded mb-2"
               required
             />

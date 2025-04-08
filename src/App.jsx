@@ -1,4 +1,5 @@
 import './App.css';
+import ScrollToTop from "./ScrollToTop";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar and footer/Navbar";
 import Footer from "./Navbar and footer/Footer";
@@ -35,6 +36,7 @@ import Library from "./Navbar and footer/Navebar items/Departments/Library";
 function App() {
   return (
     <HashRouter>
+       <ScrollToTop />
       <Navbar />
       <Routes>
         {/* Main Pages */}
