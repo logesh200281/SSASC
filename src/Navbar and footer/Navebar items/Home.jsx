@@ -9,6 +9,8 @@ import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-react"
 import videoBg from "../../assets/image/collegeAD.mp4";
 import bgImage from "../../assets/image/download.jpg";
 
+
+
 const fadeInUp = {
   hidden: { opacity: 0, y: 40, scale: 0.95 },
   visible: {
@@ -50,6 +52,7 @@ const Home = () => {
       bgImage: College,
     },
   ];
+
 
   return (
     <div className="bg-gray-100">
@@ -198,6 +201,7 @@ const Home = () => {
           })}
         </div>
       </motion.div>
+
 
       {/* Campus Life Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 h-[400px] w-full">

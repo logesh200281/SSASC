@@ -3,5 +3,10 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/SSASC/' // <-- Add this line (Match with your GitHub repo name)
+  base: '/SSASC/', // Match this with your GitHub repo name if deploying via GitHub Pages
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
 });
