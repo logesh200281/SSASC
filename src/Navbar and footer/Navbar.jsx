@@ -27,7 +27,7 @@ const transition = {
   stiffness: 100,
 };
 
-const HoveredLink = ({ children, to, className = "", icon }) => (
+const HoveredLink = ({ children, to, className = "", icon, onClick }) => (
   <Link
     to={to}
     className={`group relative flex items-center gap-2 px-3 py-1.5 text-sm md:text-base text-white rounded-md font-medium transition duration-200
@@ -35,16 +35,18 @@ const HoveredLink = ({ children, to, className = "", icon }) => (
       before:transition-transform before:duration-300 before:ease-in-out
       hover:before:scale-100 hover:before:opacity-100 hover:text-yellow-300
       ${className}`}
+    onClick={onClick}
   >
     {icon && <span>{icon}</span>}
     {children}
   </Link>
 );
 
-const DepartmentItem = ({ title, to }) => (
+const DepartmentItem = ({ title, to, onClick }) => (
   <Link
     to={`/department/${to.toLowerCase().replace(/\s+/g, "-")}`}
     className="block bg-white text-center px-4 py-2 text-sm md:text-base text-blue-900 font-semibold rounded-lg shadow transition-all hover:bg-blue-200 ring-1 ring-transparent hover:ring-blue-400 hover:ring-offset-2 hover:ring-offset-white hover:drop-shadow-md"
+    onClick={onClick}
   >
     {title}
   </Link>
@@ -72,6 +74,14 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileDeptOpen, setMobileDeptOpen] = useState(false);
 
+  const handleMenuToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <>
       {/* Top Logo and Accreditation Section */}
@@ -82,27 +92,32 @@ const Navbar = () => {
             <div className="text-white text-sm md:text-lg font-bold leading-tight">
               Sri Sankara Arts & Science College
               <div className="text-xs font-light leading-snug">
-                Affiliated to University of Madras <br /> Enathur, Kanchipuram - 631 561
+               (Autonomous) Enathur, Kanchipuram - 631 561. <br /> Affiliated to University of Madras
               </div>
             </div>
           </Link>
 
           {/* Accreditations */}
-          <div className="flex flex-wrap gap-2 items-center justify-center md:justify-end w-full md:w-auto">
+          <div className="flex flex-wrap gap-x-2 gap-y-2 items-center justify-center md:justify-end w-full md:w-auto">
             {[image13, image14, image12].map((img, idx) => (
-              <img key={idx} src={img} alt="Badge" className="h-16 w-auto rounded shadow-md" />
+              <img
+                key={idx}
+                src={img}
+                alt="Badge"
+                className="h-10 md:h-20 w-auto rounded shadow-md"
+              />
             ))}
           </div>
 
           {/* Mobile Toggle */}
           <div className="md:hidden flex justify-start w-full">
-          <button className="text-white border-2 border-yellow-400 rounded-md p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            <button
+              className="text-white border-2 border-yellow-400 rounded-md p-2"
+              onClick={handleMenuToggle}
             >
-          {mobileMenuOpen ? <CloseIcon size={28} /> : <MenuIcon size={28} />}
-          </button>
+              {mobileMenuOpen ? <CloseIcon size={28} /> : <MenuIcon size={28} />}
+            </button>
           </div>
-
         </div>
       </div>
 
@@ -111,8 +126,12 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex justify-between items-center py-3 max-w-7xl mx-auto px-6">
           <ul className="flex gap-1 text-white font-medium items-center">
-            <li><HoveredLink to="/" icon={<Home size={20} />}>Home</HoveredLink></li>
-            <li><HoveredLink to="/about" icon={<Info size={20} />}>About</HoveredLink></li>
+            <li>
+              <HoveredLink to="/" icon={<Home size={20} />} onClick={closeMenu}>Home</HoveredLink>
+            </li>
+            <li>
+              <HoveredLink to="/about" icon={<Info size={20} />} onClick={closeMenu}>About</HoveredLink>
+            </li>
 
             {/* Departments Dropdown */}
             <li
@@ -133,9 +152,8 @@ const Navbar = () => {
                     className="absolute left-0 mt-2 z-50"
                   >
                     <div className="bg-opacity-900 bg-white  backdrop-white rounded-xl shadow-2xl p-4 w-80 grid grid-cols-2 gap-2">
-
                       {departments.map((dept, i) => (
-                        <DepartmentItem key={i} title={dept} to={dept} />
+                        <DepartmentItem key={i} title={dept} to={dept} onClick={closeMenu} />
                       ))}
                     </div>
                   </motion.div>
@@ -154,7 +172,9 @@ const Navbar = () => {
               { name: "Gallery", icon: <Camera size={20} /> },
               { name: "Contact", icon: <Contact size={20} /> },
             ].map(({ name, icon }) => (
-              <li key={name}><HoveredLink to={`/${name.toLowerCase()}`} icon={icon}>{name}</HoveredLink></li>
+              <li key={name}>
+                <HoveredLink to={`/${name.toLowerCase()}`} icon={icon} onClick={closeMenu}>{name}</HoveredLink>
+              </li>
             ))}
           </ul>
         </nav>
@@ -170,8 +190,8 @@ const Navbar = () => {
               className="md:hidden overflow-hidden bg-blue-900 text-white px-6 py-4 w-full"
             >
               <ul className="flex flex-col gap-4">
-                <HoveredLink to="/" icon={<Home size={20} />} className="block">Home</HoveredLink>
-                <HoveredLink to="/about" icon={<Info size={20} />} className="block">About</HoveredLink>
+                <HoveredLink to="/" icon={<Home size={20} />} className="block" onClick={closeMenu}>Home</HoveredLink>
+                <HoveredLink to="/about" icon={<Info size={20} />} className="block" onClick={closeMenu}>About</HoveredLink>
 
                 {/* Mobile Departments Dropdown */}
                 <div>
@@ -184,7 +204,7 @@ const Navbar = () => {
                   {mobileDeptOpen && (
                     <div className="mt-2 pl-4 grid gap-1">
                       {departments.map((dept, i) => (
-                        <DepartmentItem key={i} title={dept} to={dept} />
+                        <DepartmentItem key={i} title={dept} to={dept} onClick={closeMenu} />
                       ))}
                     </div>
                   )}
@@ -201,7 +221,7 @@ const Navbar = () => {
                   { name: "Gallery", icon: <Camera size={20} /> },
                   { name: "Contact", icon: <Contact size={20} /> },
                 ].map(({ name, icon }) => (
-                  <HoveredLink key={name} to={`/${name.toLowerCase()}`} icon={icon} className="block">
+                  <HoveredLink key={name} to={`/${name.toLowerCase()}`} icon={icon} className="block" onClick={closeMenu}>
                     {name}
                   </HoveredLink>
                 ))}
